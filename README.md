@@ -9,9 +9,13 @@ There is a timed bomb and it given one of the players randomly. The player who t
 ## Controls
 
 W,A,S,D -> Movement
+
 Mouse -> Rotation
+
 1,2,3 -> Using Inventory Item
+
 TAB -> Shows Scoreboard
+
 ESC -> Shows Pause Menu
 
 
