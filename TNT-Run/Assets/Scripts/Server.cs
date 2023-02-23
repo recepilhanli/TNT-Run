@@ -27,9 +27,10 @@ public class Server : NetworkBehaviour
     public Transform DefaultCloumnTransfrom;
     private GameObject[] CreatedColoumns = new GameObject[10];
 
-    public TextMeshProUGUI Title;
-    public TextMeshProUGUI Timer;
 
+    public UIRPC UI_RPC;
+
+    [System.NonSerialized]
     public SoundManager sound;
 
     public override void OnNetworkSpawn()
@@ -63,14 +64,10 @@ public class Server : NetworkBehaviour
         }
         else if (WaitScreen.activeInHierarchy == true && CanPlayersMove.Value == true) WaitScreen.SetActive(false);
 
-        TitleAnimation();
+        
 
 
-        if (Timer.gameObject.activeInHierarchy == true)
-        {
-            Timer.text = BombTimer.Value.ToString();
-        }
-
+  
         if (!IsServer) return;
 
         int players = PlayerCount();
@@ -117,40 +114,13 @@ public class Server : NetworkBehaviour
     }
 
 
-    void TitleAnimation()
-    {
-        if (Title.gameObject.activeInHierarchy == false) return;
-        if (Title.color.a > 0)
-        {
-            Color tc = Title.color;
-            if (tc.a <= 0) Title.gameObject.SetActive(false);
-            else
-            {
-                float alpha = tc.a - Time.deltaTime / 2;
-                alpha = Mathf.Clamp(alpha, 0, 1);
-                Title.color = new Color(tc.r, tc.g, tc.b, alpha);
-            }
-
-        }
-    }
 
 
 
 
-    void SetTitle(string title)
-    {
-        Title.text = title;
-        Title.color = Color.yellow;
-        Title.gameObject.SetActive(true);
-    }
 
 
 
-    [ClientRpc]
-    void SetTitleClientRPC(string title, ClientRpcParams clientRpcParams = default)
-    {
-        SetTitle(title);
-    }
 
 
 
@@ -160,11 +130,6 @@ public class Server : NetworkBehaviour
         GiveBomb(player);
     }
 
-    [ClientRpc]
-    void ToggleTimerClientRPC(bool enabled, ClientRpcParams clientRpcParams = default)
-    {
-        Timer.gameObject.SetActive(enabled);
-    }
 
 
     [ClientRpc]
@@ -177,6 +142,7 @@ public class Server : NetworkBehaviour
     void GiveBomb(ulong player, GameObject go = null)
     {
 
+      
 
         if (go == null)
         {
@@ -205,8 +171,8 @@ public class Server : NetworkBehaviour
 
 
 
-            ToggleTimerClientRPC(false, clientRpcParams);
-
+            UI_RPC.ToggleTimerClientRPC(false, clientRpcParams);
+           
 
         }
 
@@ -227,9 +193,11 @@ public class Server : NetworkBehaviour
             }
         };
 
-        SetTitleClientRPC("<color=red>You Took The Bomb!</color>", clientRpcParams);
+
+        UI_RPC.SetTitleClientRPC("<color=red>You Took The Bomb!</color>", clientRpcParams);
+
         BomberState.UpdateNameClientRPC(HasBomb.Value, "<color=red>Bomber</color>");
-        ToggleTimerClientRPC(true, clientRpcParams);
+        UI_RPC.ToggleTimerClientRPC(true, clientRpcParams);
     }
 
 
@@ -260,7 +228,9 @@ public class Server : NetworkBehaviour
         BombTimer.Value = 25;
         CanPlayersMove.Value = true;
         PlaySoundClientRPC(0);
-        SetTitleClientRPC("<color=green>Start!</color>");
+
+
+        UI_RPC.SetTitleClientRPC("<color=green>Start!</color>");
     }
 
 
@@ -347,7 +317,8 @@ public class Server : NetworkBehaviour
         };
 
         CreateExplosionClientRPC(BomberState.gameObject.transform.position);
-        ToggleTimerClientRPC(false, clientRpcParams);
+
+        UI_RPC.ToggleTimerClientRPC(false, clientRpcParams);
         BomberState.SpawnPlayerClientRPC(clientRpcParams);
         BomberState.UpdateNameClientRPC(HasBomb.Value, BomberState.NickName.Value.ToString());
         BomberState.gameObject.GetComponent<PlayerInventory>().ResetInventoryClientRPC(clientRpcParams);

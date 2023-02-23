@@ -172,7 +172,7 @@ namespace player.controller
 
                 if (!groundedPlayer)
                 {
-                    playerVelocity.y += Mathf.Sqrt(jumpHeight /4 * -4.0f * gravityValue);
+                    playerVelocity.y += Mathf.Sqrt(jumpHeight /3 * -4.0f * gravityValue);
                     dash = true;
                 }
                 else playerVelocity.y += Mathf.Sqrt(jumpHeight * -4.0f * gravityValue);

@@ -85,6 +85,7 @@ public class Chatting : NetworkBehaviour
         if (msg == null) return;
         msg += System.Environment.NewLine;
         ChatString = ChatString.Insert(0, msg);
+        if(ChatString.Length > 256) ChatString = ChatString.Remove(ChatString.Length - (ChatString.Length -256));
         chat.text = ChatString;
 
     }

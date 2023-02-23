@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 
         private Chatting chat;
-        public ItemData[] items;
+        public ItemData[] items = new ItemData[3];
         public Image[] InventoryImages;
         private PlayerState state = null;
         private Image InventoryEffect;
