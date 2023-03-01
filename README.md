@@ -29,6 +29,6 @@ Inventory system
 
 Syncing all player movements, events
 
-[![Gameplay Video]([https://img.youtube.com/watch?v=_UMsY6TIVSQ/0.jpg](https://img.youtube.com/vi/spUNkAUG1sQ/0.jpg))](https://youtu.be/_UMsY6TIVSQ)
+[![Gameplay Video](https://img.youtube.com/vi/_UMsY6TIVSQ/0.jpg)](https://www.youtube.com/watch?v=_UMsY6TIVSQ)
 
 
