@@ -30,7 +30,6 @@ Inventory system
 Syncing all player movements, events
 
 
-![SS](https://cdn.discordapp.com/attachments/834030935841964042/1078072650951299092/dc.png)
-
+[![Gameplay Video](https://img.youtu.be/_UMsY6TIVSQ/0.jpg)](https://youtu.be/_UMsY6TIVSQ)
 
 
